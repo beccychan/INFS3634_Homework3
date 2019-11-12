@@ -25,7 +25,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class CheckoutFragment extends Fragment {
     private RecyclerView checkoutRecyclerView;
-    private CheckoutAdapter checkoutAdapter;
+    private FavouritesAdapter favouritesAdapter;
     private RecyclerView.LayoutManager checkoutLayoutManager;
     private TextView checkoutTotal;
     private Double total;
@@ -44,7 +44,7 @@ public class CheckoutFragment extends Fragment {
 
     public void removeItem(int position) {
         checkoutList.remove(position);
-        checkoutAdapter.notifyItemRemoved(position);
+        favouritesAdapter.notifyItemRemoved(position);
         delete("orders", checkoutList);
         updateTotal();
     }
@@ -91,17 +91,17 @@ public class CheckoutFragment extends Fragment {
         checkoutRecyclerView = view.findViewById(R.id.checkout_recyclerView);
         //if we want to set the size: checkoutRecyclerView.setHasFixedSize(true);
         checkoutLayoutManager = new LinearLayoutManager(view.getContext());
-        checkoutAdapter = new CheckoutAdapter(view.getContext(), checkoutList);
+        favouritesAdapter = new FavouritesAdapter(view.getContext(), checkoutList);
 
         checkoutRecyclerView.setLayoutManager(checkoutLayoutManager);
-        checkoutRecyclerView.setAdapter(checkoutAdapter);
+        checkoutRecyclerView.setAdapter(favouritesAdapter);
 
         checkoutTotal = view.findViewById(R.id.checkout_total);
 
         total = orderTotal(checkoutList);
         checkoutTotal.setText(this.getActivity().getString(R.string.total, NumberFormat.getCurrencyInstance(new Locale("en", "US")).format(total)));
 
-        checkoutAdapter.setOnItemClickListener(new CheckoutAdapter.OnItemClickListener(){
+        favouritesAdapter.setOnItemClickListener(new FavouritesAdapter.OnItemClickListener(){
             @Override
             public void onDeleteClick (int position){
                 removeItem(position);

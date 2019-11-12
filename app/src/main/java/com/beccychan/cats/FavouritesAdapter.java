@@ -17,10 +17,10 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class CheckoutAdapter extends RecyclerView.Adapter<CheckoutAdapter.CheckoutViewHolder>{
-    private ArrayList<CheckoutItem> checkoutList;
+public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.FavouritesViewHolder>{
+    private ArrayList<FavouriteCats> favouritesList;
     private Context checkoutContext;
-    private OnItemClickListener checkoutListener;
+    private OnItemClickListener favouritesListener;
 
     public interface OnItemClickListener{
         void onDeleteClick(int position);
@@ -30,30 +30,34 @@ public class CheckoutAdapter extends RecyclerView.Adapter<CheckoutAdapter.Checko
         checkoutListener = listener;
     }
 
-    public CheckoutAdapter (Context context, ArrayList<CheckoutItem> list) {
-        checkoutList = list;
+    public FavouritesAdapter(Context context, ArrayList<FavouriteCats> list) {
+        favouritesList = list;
         checkoutContext = context;
     }
 
     @NonNull
     @Override
-    public CheckoutViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public FavouritesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.checkout_item, parent, false);
-        return new CheckoutViewHolder(v, checkoutListener);
+        return new FavouritesViewHolder(v, favouritesListener);
     }
 
     @Override
     public int getItemCount() {
-        return checkoutList.size();
+        return favouritesList.size();
     }
 
     @Override
     public void onBindViewHolder(@NonNull CheckoutViewHolder holder, int position) {
-        CheckoutItem checkoutItem = checkoutList.get(position);
-        String checkoutImage = checkoutItem.getItemImage();
-        String checkoutName = checkoutItem.getItemName();
-        Double checkoutPrice = checkoutItem.getItemPrice();
-        Integer checkoutQuantity = checkoutItem.getItemAmount();
+        FavouritesItem favouritesItem = favouritesList.get(position);
+        String favouriteImage = checkoutItem.getItemImage();
+        String favouriteName = checkoutItem.getItemName();
+        Double favouritePrice = checkoutItem.getItemPrice();
+        Integer favouriteQuantity = checkoutItem.getItemAmount();
+
+        //breed
+        //weight (metrics)
+        //
 
         Picasso.get().load("file:///android_asset/" + checkoutImage).fit().centerInside().into(holder.checkoutImage);
         holder.checkoutName.setText(checkoutName);
