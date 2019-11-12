@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">cats</string>
+    <string name="price">$3.00</string>
+    <string name="description">This is le meow</string>
+    <string name="name">cats</string>
+    <string name="quantity">Quantity: %1$d</string>
+    <string name="total">Total: %1$s</string>
+</resources>

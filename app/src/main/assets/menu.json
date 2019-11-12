@@ -1,0 +1,107 @@
+[
+    {
+        "id": 0,
+        "name": "Hamborger",
+        "description": "Our classic hamborger. A layer of beef goodness topped with pickles, tomato, mustard, mayonnaise and cheese.",
+        "image": "hamborger.jpg",
+        "price": 2.50
+    },
+    {
+        "id": 1,
+        "name": "Double Hamborger",
+        "description": "Our classic hamborger, doubled. Two layers of juicy beef topped with pickles, mustard, mayonnaise and cheese.",
+        "image": "double-hamborger.jpg",
+        "price": 3.50
+    },
+    {
+        "id": 2,
+        "name": "Spicy Hamborger",
+        "description": "A new take on the old classic. A hamborger, with spice.",
+        "image": "spicy-hamborger.jpg",
+        "price": 3.00
+    },
+    {
+        "id": 3,
+        "name": "Kentucky Fried Borger",
+        "description": "We didn't rip this burger off from anywhere. Promise.",
+        "image": "kentucky-fried-borger.jpg",
+        "price": 4.00
+    },
+    {
+        "id": 4,
+        "name": "Fillet O Fush",
+        "description": "A beautiful, hand-caught fush wrapped in a briosh bun. WARNING: May take up to 2 days to catch fush.",
+        "image": "fillet-o-fush.jpg",
+        "price": 7.00
+    },
+    {
+        "id": 5,
+        "name": "Full Chicken",
+        "description": "A lovely stuffed chicken that was recently bought from the supermarket.",
+        "image": "full-chicken.jpg",
+        "price": 13.00
+    },
+    {
+        "id": 6,
+        "name": "Half-eaten Chicken Nooget",
+        "description": "Hey don't look at us, what you see is what you get.",
+        "image": "chicken-nooget.jpg",
+        "price": 6.00
+    },
+    {
+        "id": 7,
+        "name": "Kimchi Froies",
+        "description": "Our parents wanted to put their old Kimchi somewhere. They accidentally dumped it into our fries. Surprise.",
+        "image": "kimchi-froies.jpg",
+        "price": 4.00
+    },
+    {
+        "id": 8,
+        "name": "Hesh Brown",
+        "description": "Monch, monch.",
+        "image": "hesh-brown.jpg",
+        "price": 1.00
+    },
+    {
+        "id": 9,
+        "name": "Thicc Shake",
+        "description": "When the protein shake ain't giving you the gainz.",
+        "image": "thicc-shake.jpg",
+        "price": 4.00
+    },
+    {
+        "id": 10,
+        "name": "Bacon & Egg McMoofin",
+        "description": "Crispy bacon with a beautifully cooked egg. Perfect way to start a cholestrol ridden day.",
+        "image": "bacon-and-egg.jpg",
+        "price": 3.50
+    },
+    {
+        "id": 11,
+        "name": "3 Pancakes",
+        "description": "White, fluffy pancakes with golden maple syrup.",
+        "image": "pancakes.jpg",
+        "price": 5.00
+    },
+    {
+        "id": 12,
+        "name": "Coca-Cola",
+        "description": "A true American creation. 375mL of cold, refreshing Coca-Cola.",
+        "image": "coca-cola.jpg",
+        "price": 3.00
+    },
+    {
+        "id": 13,
+        "name": "Pepsi",
+        "description": "For the people who like the inferior brand of Coke. 375mL of cold, bland Pepsi.",
+        "image": "pepsi.jpg",
+        "price": 3.00
+    },
+    {
+        "id": 14,
+        "name": "Tomato Sauce",
+        "description": "Yes, that's the real price.",
+        "image": "tomato-sauce.jpg",
+        "price": 5.00
+    }
+]
