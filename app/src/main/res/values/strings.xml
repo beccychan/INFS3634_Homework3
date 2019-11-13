@@ -1,9 +1,7 @@
 <resources>
     <string name="app_name">cats</string>
-    <string name="price">$3.00</string>
-    <string name="description">This is le meow</string>
+    <string name="description">Distinguished by truly unique ears that curl back in a graceful arc, offering an alert, perky, happily surprised expression, they cause people to break out into a big smile when viewing their first Curl. Curls are very people-oriented, faithful, affectionate soulmates, adjusting remarkably fast to other pets, children, and new situations.</string>
     <string name="name">American Curl</string>
-    <string name="quantity">Quantity: %1$d</string>
-    <string name="total">Total: %1$s</string>
+    <string name="temperament">Affectionate, Curious, Intelligent, Interactive, Lively, Playful, Social</string>
     <string name="favourite_item">American Curl</string>
 </resources>
