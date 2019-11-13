@@ -34,7 +34,7 @@ public class CheckoutFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_checkout, container, false);
+        View view = inflater.inflate(R.layout.fragment_favourites, container, false);
 
         checkoutList = load("orders", checkoutList);
         view = buildRecyclerView(view);
