@@ -5,7 +5,7 @@
         android:icon="@drawable/ic_home_black_24dp"
         android:title="Home" />
     <item
-        android:id="@+id/nav_checkout"
-        android:icon="@drawable/ic_shopping_cart_black_24dp"
-        android:title="Checkout" />
+        android:id="@+id/nav_favourites"
+        android:icon="@drawable/favourites_star_gold_24dp"
+        android:title="Favourites" />
 </menu>
