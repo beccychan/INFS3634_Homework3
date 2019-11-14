@@ -104,7 +104,7 @@ public class HomeFragment extends Fragment implements CatAdapter.OnItemClickList
     }
 
     public void getCatBreeds() {
-        RequestQueue queue = Volley.newRequestQueue(this.getActivity());
+        RequestQueue queue = Volley.newRequestQueue(this.getContext()); //rather than this.getActivity() - which may have been null
         catBreedURL = "https://api.thecatapi.com/v1/breeds";
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, catBreedURL, new Response.Listener<String>() {

@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">cats</string>
     <string name="description">Distinguished by truly unique ears that curl back in a graceful arc, offering an alert, perky, happily surprised expression, they cause people to break out into a big smile when viewing their first Curl. Curls are very people-oriented, faithful, affectionate soulmates, adjusting remarkably fast to other pets, children, and new situations.</string>
-    <string name="description_title">Description Title</string>
+    <string name="description_title">Description</string>
     <string name="name">American Curl</string>
     <string name="temperament">Affectionate, Curious, Intelligent, Interactive, Lively, Playful, Social</string>
     <string name="favourite_item">American Curl</string>

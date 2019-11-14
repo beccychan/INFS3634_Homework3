@@ -122,16 +122,16 @@ public class DetailActivity extends AppCompatActivity {
 
     public void loadImage() {
         ImageView catImageView = findViewById(R.id.image_detail);
-        Picasso.get().load(catImage.getUrl()).fit().centerInside().into(catImageView); //load from API instead
+        Picasso.get().load(catImage.getUrl()).fit().centerInside().into(catImageView); //load from API instead?
     }
 
     public ArrayList<Stat> addStats(CatBreed cat) {
         ArrayList<Stat> catStats = new ArrayList<>();
 
         catStats.add(new Stat("Origin", cat.getOrigin()));
-        catStats.add(new Stat("Life Span", cat.getLife_span()));
-        catStats.add(new Stat("Weight", cat.getWeight().getMetric()));
-        catStats.add(new Stat("Dog Friendly", cat.getDog_friendly()));
+        catStats.add(new Stat("Life Span (years)", cat.getLife_span()));
+        catStats.add(new Stat("Weight (kg)", cat.getWeight().getMetric()));
+        catStats.add(new Stat("Dog Friendly (out of 5)", cat.getDog_friendly()));
         catStats.add(new Stat("Wikipedia URL", cat.getWikipedia_url()));
 
         return catStats;
