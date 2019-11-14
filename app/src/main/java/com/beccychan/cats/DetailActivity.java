@@ -19,30 +19,21 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.squareup.picasso.Picasso;
 
+import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import static com.beccychan.cats.HomeFragment.CAT_ID;
-
 public class DetailActivity extends AppCompatActivity {
 
-    private String catId;
-    private String catImage;
-    private String catName;
-    private String temperament;
-    private String catDescription;
-    private String catDescriptionTitle;
+    private CatBreed clickedCat;
 
     private RecyclerView statsRecyclerView;
     private StatsAdapter statsAdapter;
     private RecyclerView.LayoutManager statsLayoutManager;
     private ArrayList<Stat> statsList;
 
-
-    //ADD GSON API CALL TO LOAD THE DATA
-    //CREATE BUNDLE TO SAVE THE DATA OF THE CAT THAT WAS SELECTED
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,33 +42,37 @@ public class DetailActivity extends AppCompatActivity {
         if(getActionBar() != null){ getActionBar().setDisplayHomeAsUpEnabled(true); }
 
         Intent intent = getIntent();
+        clickedCat = (CatBreed) intent.getSerializableExtra("clickedCat");
 
-        catId = intent.getStringExtra(CAT_ID);
+        loadUI();
+    }
 
+    public void loadUI() {
         ImageView catImageView = findViewById(R.id.image_detail);
         TextView catNameView = findViewById(R.id.name_detail);
         TextView temperamentView = findViewById(R.id.temperament_detail);
-        TextView catDescriptionTitleView = findViewById(R.id.descriptionTitle_detail);
         TextView catDescriptionView = findViewById(R.id.description_detail);
 
-        Picasso.get().load("file:///android_asset/" + catImage).fit().centerInside().into(catImageView); //load from API instead
-        catNameView.setText(catName);
-        temperamentView.setText(temperament);
-        catDescriptionView.setText(catDescription);
-        catDescriptionTitleView.setText(catDescriptionTitle);
+        //ADD GSON API CALL TO LOAD THE DATA
 
-        ImageButton favButton = findViewById(R.id.favoriteButton_detail);
+//        Picasso.get().load("file:///android_asset/" + catImage).fit().centerInside().into(catImageView); //load from API instead
+        catNameView.setText(clickedCat.getName());
+        temperamentView.setText(clickedCat.getTemperament());
+        catDescriptionView.setText(clickedCat.getDescription());
 
-        statsRecyclerView = findViewById(R.id.favourites_recyclerView);
-        //if we want to set the size: checkoutRecyclerView.setHasFixedSize(true);
+        //RECYCLERVIEW
+        statsRecyclerView = findViewById(R.id.stats_recyclerView);
+        statsRecyclerView.setHasFixedSize(true);
         statsLayoutManager = new LinearLayoutManager(this);
 
-        //PUSH THE STATS TO THE ARRAY BEFORE THIS
-        statsAdapter = new StatsAdapter(this, statsList);
+        statsList = addStats(clickedCat);
+        statsAdapter = new StatsAdapter(statsList);
 
         statsRecyclerView.setLayoutManager(statsLayoutManager);
         statsRecyclerView.setAdapter(statsAdapter);
 
+        //FAVOURITES BUTTON
+        ImageButton favButton = findViewById(R.id.favoriteButton_detail);
         favButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,42 +80,36 @@ public class DetailActivity extends AppCompatActivity {
 
             }
         });
-
-        /*if (savedInstanceState != null) {
-            orderAmountCount = savedInstanceState.getInt("count");
-            orderAmount.setText(String.valueOf(orderAmountCount));
-        }*/
     }
 
     public ArrayList<Stat> addStats(CatBreed cat) {
         ArrayList<Stat> catStats = new ArrayList<>();
 
-        catStats.add(new Stat("Origin", cat.getOrigin());
-        catStats.add(new Stat("Life Span", cat.getLife_span());
-        catStats.add(new Stat("Weight", cat.getWeight().getMetric());
-        catStats.add(new Stat("Dog Friendly", cat.getDog_friendly());
-        catStats.add(new Stat("Wikipedia URL", cat.getWikipedia_url());
+        catStats.add(new Stat("Origin", cat.getOrigin()));
+        catStats.add(new Stat("Life Span", cat.getLife_span()));
+        catStats.add(new Stat("Weight", cat.getWeight().getMetric()));
+        catStats.add(new Stat("Dog Friendly", cat.getDog_friendly()));
+        catStats.add(new Stat("Wikipedia URL", cat.getWikipedia_url()));
 
         return catStats;
     }
 
-
     private void add() {
-        ArrayList<FavouritesItem> favouritesList;
-        FavouritesItem favourite = new FavouritesItem(Integer.valueOf(catId), catImage, catName, temperament, catDescriptionTitle, catDescription);
+        ArrayList<CatBreed> favouritesList;
+        CatBreed favourite = clickedCat;
 
         SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
         String json = sharedPreferences.getString("favourites", null);
         Gson gson = new Gson();
 
-        Type favouritesJson = new TypeToken<ArrayList<FavouritesItem>>(){}.getType();
+        Type favouritesJson = new TypeToken<ArrayList<CatBreed>>(){}.getType();
         favouritesList = gson.fromJson(json, favouritesJson);
 
         if (favouritesList == null) {
             favouritesList = new ArrayList<>();
         }
 
-        favourites.add(favourite);
+        favouritesList.add(favourite);
 
         SharedPreferences.Editor editor = sharedPreferences.edit();
         json = gson.toJson(favouritesList);

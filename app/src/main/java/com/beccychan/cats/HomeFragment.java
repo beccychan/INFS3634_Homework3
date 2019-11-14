@@ -127,13 +127,9 @@ public class HomeFragment extends Fragment implements CatAdapter.OnItemClickList
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
-
         inflater.inflate(R.menu.cat_search_menu, menu);
-
         android.view.MenuItem searchItem = menu.findItem(R.id.action_search);
-
         SearchView searchView = (SearchView) searchItem.getActionView();
-
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -190,13 +186,21 @@ public class HomeFragment extends Fragment implements CatAdapter.OnItemClickList
     public void onItemClick(int position) {
         Intent detailIntent = new Intent(getActivity(), DetailActivity.class);
         CatBreed clickedItem = catList.get(position);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("clickedCat", clickedItem);
 
-        detailIntent.putExtra(CAT_ID, String.valueOf(clickedItem.getId()));
-//        detailIntent.putExtra(MENU_IMAGE, clickedItem.getMenuImage());
-//        detailIntent.putExtra(MENU_NAME, clickedItem.getMenuName());
-//        detailIntent.putExtra(MENU_PRICE, String.valueOf(clickedItem.getMenuPrice()));
-//        detailIntent.putExtra(MENU_DESCRIPTION, clickedItem.getMenuDescription());
+//        detailIntent.putExtra(CAT_ID, clickedItem.getId());
+//        detailIntent.putExtra(CAT_NAME, clickedItem.getName());
+//        detailIntent.putExtra(CAT_TEMPERAMENT, clickedItem.getTemperament());
+//        detailIntent.putExtra(CAT_DESCRIPTION, clickedItem.getDescription());
+//        detailIntent.putExtra(CAT_ORIGIN, clickedItem.getOrigin());
+//        detailIntent.putExtra(CAT_LIFESPAN, clickedItem.getLife_span());
+//        detailIntent.putExtra(, clickedItem.getDog_friendly());
+//        detailIntent.putExtra(, clickedItem.getWeight().getMetric());
+//        detailIntent.putExtra(, clickedItem.getWikipedia_url());
 
+
+        detailIntent.putExtras(bundle);
         startActivity(detailIntent);
     }
 }

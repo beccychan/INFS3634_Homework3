@@ -1,8 +1,9 @@
 package com.beccychan.cats;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class CatImage {
+public class CatImage implements Serializable {
     private String width;
     private String id;
     private String url;

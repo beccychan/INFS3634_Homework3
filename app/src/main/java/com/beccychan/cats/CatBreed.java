@@ -1,6 +1,8 @@
 package com.beccychan.cats;
 
-public class CatBreed {
+import java.io.Serializable;
+
+public class CatBreed implements Serializable {
     private String id;
     private String name;
     private String description;

@@ -1,7 +1,8 @@
 package com.beccychan.cats;
 
-public class CatWeight
-{
+import java.io.Serializable;
+
+public class CatWeight implements Serializable {
     private String metric;
     private String imperial;
 

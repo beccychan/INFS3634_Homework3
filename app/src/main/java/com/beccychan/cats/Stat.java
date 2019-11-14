@@ -1,6 +1,8 @@
 package com.beccychan.cats;
 
-public class Stat {
+import java.io.Serializable;
+
+public class Stat implements Serializable {
     public String key;
     public String value;
 

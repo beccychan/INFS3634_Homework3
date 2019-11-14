@@ -70,7 +70,7 @@ public class FavouritesFragment extends Fragment {
 
     public View buildRecyclerView(View view) {
         favouritesRecyclerView = view.findViewById(R.id.favourites_recyclerView);
-        //if we want to set the size: checkoutRecyclerView.setHasFixedSize(true);
+        favouritesRecyclerView.setHasFixedSize(true);
         favouritesLayoutManager = new LinearLayoutManager(view.getContext());
         favouritesAdapter = new FavouritesAdapter(view.getContext(), favouritesList);
 
