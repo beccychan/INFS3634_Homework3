@@ -133,6 +133,7 @@ public class HomeFragment extends Fragment implements CatAdapter.OnItemClickList
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
+        //MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.cat_search_menu, menu);
         android.view.MenuItem searchItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) searchItem.getActionView();
@@ -150,6 +151,7 @@ public class HomeFragment extends Fragment implements CatAdapter.OnItemClickList
         });
 
         super.onCreateOptionsMenu(menu, inflater);
+        //i think this links to previous inflater and overlooks inflating the search menu
     }
 
     private void parseResponse(String response) {
