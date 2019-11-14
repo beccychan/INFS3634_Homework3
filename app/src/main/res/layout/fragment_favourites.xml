@@ -6,7 +6,7 @@
     tools:context=".MainActivity">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/checkout_recyclerView"
+        android:id="@+id/favourites_recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/darker_gray" />

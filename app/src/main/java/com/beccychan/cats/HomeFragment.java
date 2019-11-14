@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,9 +32,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static android.content.Context.MODE_PRIVATE;
-import static android.os.Build.ID;
 
-public class HomeFragment extends Fragment implements MenuAdapter.OnItemClickListener {
+public class HomeFragment extends Fragment implements CatAdapter.OnItemClickListener {
     public static final String MENU_ID = "menuId";
     public static final String MENU_IMAGE = "menuImage";
     public static final String MENU_NAME = "menuName";
@@ -45,7 +43,7 @@ public class HomeFragment extends Fragment implements MenuAdapter.OnItemClickLis
     public static String catBreedURL = "catBreedURL";
 
     private RecyclerView menuRecyclerView;
-    private MenuAdapter menuAdapter;
+    private CatAdapter catAdapter;
     private ArrayList<MenuItem> menuList;
 
     /*
@@ -93,7 +91,7 @@ public class HomeFragment extends Fragment implements MenuAdapter.OnItemClickLis
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-        menuRecyclerView = view.findViewById(R.id.menu_recyclerView);
+        menuRecyclerView = view.findViewById(R.id.cat_recyclerView);
         menuRecyclerView.setHasFixedSize(true);
         menuRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity());
 
@@ -145,9 +143,9 @@ public class HomeFragment extends Fragment implements MenuAdapter.OnItemClickLis
         catList = (List<Cat>) new Gson()
                 .fromJson( apiText , collectionType);*/
 
-        menuAdapter = new MenuAdapter(getActivity(), menuList);
-        menuRecyclerView.setAdapter(menuAdapter);
-        menuAdapter.setOnItemClickListener(HomeFragment.this);
+        catAdapter = new CatAdapter(getActivity(), menuList);
+        menuRecyclerView.setAdapter(catAdapter);
+        catAdapter.setOnItemClickListener(HomeFragment.this);
     }
 
     private String loadJSON(String filename) {
