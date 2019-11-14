@@ -15,6 +15,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.squareup.picasso.Picasso;
@@ -23,16 +30,22 @@ import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 public class DetailActivity extends AppCompatActivity {
 
     private CatBreed clickedCat;
+    private ArrayList<CatImage> catImageAll;
+    private CatImage catImage;
 
     private RecyclerView statsRecyclerView;
     private StatsAdapter statsAdapter;
     private RecyclerView.LayoutManager statsLayoutManager;
     private ArrayList<Stat> statsList;
+
+    private String catImageURL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,19 +56,44 @@ public class DetailActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         clickedCat = (CatBreed) intent.getSerializableExtra("clickedCat");
-
         loadUI();
+
+        //Volley
+        RequestQueue queue = Volley.newRequestQueue(this);
+        catImageURL = "https://api.thecatapi.com/v1/images/search?breed_id=" + clickedCat.getId();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, catImageURL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Gson gson = new Gson();
+                Type catImageType = new TypeToken<ArrayList<CatImage>>(){}.getType();
+                catImageAll = gson.fromJson(response, catImageType);
+                catImage = catImageAll.get(0);
+                loadImage();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        }
+        ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<String, String>();
+                headers.put("x-api-key", "99c5c080-ad1d-481e-b5c3-f5e3572732a0");
+                return headers;
+            }
+        };
+
+        queue.add(stringRequest);
     }
 
     public void loadUI() {
-        ImageView catImageView = findViewById(R.id.image_detail);
         TextView catNameView = findViewById(R.id.name_detail);
         TextView temperamentView = findViewById(R.id.temperament_detail);
         TextView catDescriptionView = findViewById(R.id.description_detail);
 
-        //ADD GSON API CALL TO LOAD THE DATA
-
-//        Picasso.get().load("file:///android_asset/" + catImage).fit().centerInside().into(catImageView); //load from API instead
         catNameView.setText(clickedCat.getName());
         temperamentView.setText(clickedCat.getTemperament());
         catDescriptionView.setText(clickedCat.getDescription());
@@ -80,6 +118,11 @@ public class DetailActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    public void loadImage() {
+        ImageView catImageView = findViewById(R.id.image_detail);
+        Picasso.get().load(catImage.getUrl()).fit().centerInside().into(catImageView); //load from API instead
     }
 
     public ArrayList<Stat> addStats(CatBreed cat) {

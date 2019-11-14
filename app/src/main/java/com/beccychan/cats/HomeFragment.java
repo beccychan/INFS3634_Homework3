@@ -37,12 +37,13 @@ import java.util.Map;
 import static android.content.Context.MODE_PRIVATE;
 
 public class HomeFragment extends Fragment implements CatAdapter.OnItemClickListener {
-    public static final String CAT_ID = "catId";
     public static String catBreedURL = "catBreedURL";
 
     private RecyclerView catRecyclerView;
     private CatAdapter catAdapter;
     private ArrayList<CatBreed> catList;
+
+    private String storeResponse;
 
     /*
     String searchUrl = "https://api.thecatapi.com/v1/images/search?breed_id=" + catID;
@@ -93,22 +94,29 @@ public class HomeFragment extends Fragment implements CatAdapter.OnItemClickList
         catRecyclerView.setHasFixedSize(true);
         catRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        Context context;
+        if (storeResponse == null) {
+            getCatBreeds();
+        } else {
+            parseResponse(storeResponse);
+        }
+
+        return view;
+    }
+
+    public void getCatBreeds() {
         RequestQueue queue = Volley.newRequestQueue(this.getActivity());
         catBreedURL = "https://api.thecatapi.com/v1/breeds";
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, catBreedURL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                System.out.println(response.substring(500));
-                //create new gson
-                //get cat images/breeds from gson
-                Gson gson = new Gson();
+                storeResponse = response;
+                parseResponse(response);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                error.printStackTrace();
             }
         }
         ) {
@@ -120,9 +128,7 @@ public class HomeFragment extends Fragment implements CatAdapter.OnItemClickList
             }
         };
 
-
-//        loadMenu();
-        return view;
+        queue.add(stringRequest);
     }
 
     @Override
@@ -146,40 +152,14 @@ public class HomeFragment extends Fragment implements CatAdapter.OnItemClickList
         super.onCreateOptionsMenu(menu, inflater);
     }
 
-    private void loadMenu() {
-        SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("shared preferences", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+    private void parseResponse(String response) {
 
         Gson gson = new Gson();
-        String json = loadJSON("menu.json");
-        editor.putString("menu", json);
-        editor.apply();
-
         Type menuJson = new TypeToken<ArrayList<CatBreed>>(){}.getType();
-        catList = gson.fromJson(json, menuJson);
-
-        /*Type collectionType = new TypeToken<List<Cat>>(){}.getType();
-        catList = (List<Cat>) new Gson()
-                .fromJson( apiText , collectionType);*/
-
+        catList = gson.fromJson(response, menuJson);
         catAdapter = new CatAdapter(getActivity(), catList);
         catRecyclerView.setAdapter(catAdapter);
         catAdapter.setOnItemClickListener(HomeFragment.this);
-    }
-
-    private String loadJSON(String filename) {
-        String json = null;
-        try {
-            InputStream is = this.getActivity().getAssets().open(filename);
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            json = new String(buffer, "UTF-8");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return json;
     }
 
     @Override
@@ -188,17 +168,6 @@ public class HomeFragment extends Fragment implements CatAdapter.OnItemClickList
         CatBreed clickedItem = catList.get(position);
         Bundle bundle = new Bundle();
         bundle.putSerializable("clickedCat", clickedItem);
-
-//        detailIntent.putExtra(CAT_ID, clickedItem.getId());
-//        detailIntent.putExtra(CAT_NAME, clickedItem.getName());
-//        detailIntent.putExtra(CAT_TEMPERAMENT, clickedItem.getTemperament());
-//        detailIntent.putExtra(CAT_DESCRIPTION, clickedItem.getDescription());
-//        detailIntent.putExtra(CAT_ORIGIN, clickedItem.getOrigin());
-//        detailIntent.putExtra(CAT_LIFESPAN, clickedItem.getLife_span());
-//        detailIntent.putExtra(, clickedItem.getDog_friendly());
-//        detailIntent.putExtra(, clickedItem.getWeight().getMetric());
-//        detailIntent.putExtra(, clickedItem.getWikipedia_url());
-
 
         detailIntent.putExtras(bundle);
         startActivity(detailIntent);
