@@ -110,14 +110,14 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void add() {
-        ArrayList<CheckoutItem> orderList;
-        CheckoutItem order = new CheckoutItem(orderAmountCount, Integer.valueOf(menuId), menuImage, menuName, Double.valueOf(menuPrice), menuDescription);
+        ArrayList<FavouritesItem> orderList;
+        FavouritesItem order = new FavouritesItem(orderAmountCount, Integer.valueOf(menuId), menuImage, menuName, Double.valueOf(menuPrice), menuDescription);
 
         SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
         String json = sharedPreferences.getString("orders", null);
         Gson gson = new Gson();
 
-        Type menuJson = new TypeToken<ArrayList<CheckoutItem>>(){}.getType();
+        Type menuJson = new TypeToken<ArrayList<FavouritesItem>>(){}.getType();
         orderList = gson.fromJson(json, menuJson);
 
         if (orderList == null) {

@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.FavouritesViewHolder>{
-    private ArrayList<FavouriteCats> favouritesList;
+    private ArrayList<FavouritesItem> favouritesList;
     private Context checkoutContext;
     private OnItemClickListener favouritesListener;
 
@@ -27,10 +27,10 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Fa
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
-        checkoutListener = listener;
+        favouritesListener = listener;
     }
 
-    public FavouritesAdapter(Context context, ArrayList<FavouriteCats> list) {
+    public FavouritesAdapter(Context context, ArrayList<FavouritesItem> list) {
         favouritesList = list;
         checkoutContext = context;
     }
@@ -47,8 +47,10 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Fa
         return favouritesList.size();
     }
 
+
+    //Make decision on what to put into the favourites screen.
     @Override
-    public void onBindViewHolder(@NonNull CheckoutViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull FavouritesViewHolder holder, int position) {
         FavouritesItem favouritesItem = favouritesList.get(position);
         String favouriteImage = checkoutItem.getItemImage();
         String favouriteName = checkoutItem.getItemName();
@@ -66,14 +68,14 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Fa
 
     }
 
-    public class CheckoutViewHolder extends RecyclerView.ViewHolder {
+    public class FavouritesViewHolder extends RecyclerView.ViewHolder {
         public ImageView checkoutImage;
         public TextView checkoutName;
         public TextView checkoutPrice;
         public TextView checkoutQuantity;
         public Button deleteMenuItem;
 
-        public CheckoutViewHolder(View itemView, final OnItemClickListener listener) {
+        public FavouritesViewHolder(View itemView, final OnItemClickListener listener) {
             super(itemView);
             checkoutImage = itemView.findViewById(R.id.checkout_image);
             checkoutName = itemView.findViewById(R.id.checkout_name);

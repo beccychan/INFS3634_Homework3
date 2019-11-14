@@ -23,42 +23,34 @@ import java.util.Locale;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class CheckoutFragment extends Fragment {
-    private RecyclerView checkoutRecyclerView;
+public class FavouritesFragment extends Fragment {
+    private RecyclerView favouritesRecyclerView;
     private FavouritesAdapter favouritesAdapter;
-    private RecyclerView.LayoutManager checkoutLayoutManager;
-    private TextView checkoutTotal;
-    private Double total;
-    private ArrayList<CheckoutItem> checkoutList;
+    private RecyclerView.LayoutManager favouritesLayoutManager;
+    private ArrayList<FavouritesItem> favouritesList;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_favourites, container, false);
 
-        checkoutList = load("orders", checkoutList);
+        favouritesList = load("favourites", favouritesList);
         view = buildRecyclerView(view);
 
         return view;
     }
 
     public void removeItem(int position) {
-        checkoutList.remove(position);
+        favouritesList.remove(position);
         favouritesAdapter.notifyItemRemoved(position);
-        delete("orders", checkoutList);
-        updateTotal();
+        delete("favourites", favouritesList);
     }
 
-    private void updateTotal(){
-        total = orderTotal(checkoutList);
-        checkoutTotal.setText(this.getActivity().getString(R.string.total, NumberFormat.getCurrencyInstance(new Locale("en", "US")).format(total)));
-    }
-
-    private ArrayList<CheckoutItem> load(String key, ArrayList<CheckoutItem> list) {
+    private ArrayList<FavouritesItem> load(String key, ArrayList<FavouritesItem> list) {
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("shared preferences", MODE_PRIVATE);
         Gson gson = new Gson();
         String json = sharedPreferences.getString(key, null);
-        Type menuJson = new TypeToken<ArrayList<CheckoutItem>>(){}.getType();
+        Type menuJson = new TypeToken<ArrayList<FavouritesItem>>(){}.getType();
         list = gson.fromJson(json, menuJson);
 
         if (list == null) {
@@ -68,38 +60,22 @@ public class CheckoutFragment extends Fragment {
         return list;
     }
 
-    private void delete(String key, ArrayList<CheckoutItem> list) {
+    private void delete(String key, ArrayList<FavouritesItem> list) {
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("shared preferences", MODE_PRIVATE);
         Gson gson = new Gson();
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("orders", gson.toJson(list));
+        editor.putString("favourites", gson.toJson(list));
         editor.apply();
     }
 
-    private Double orderTotal(ArrayList<CheckoutItem> list) {
-        int count = 0;
-        double sum = 0.0;
-        while(list.size() > count) {
-            CheckoutItem item = list.get(count);
-            sum += (item.getItemAmount() * item.getItemPrice());
-            count++;
-        }
-        return sum;
-    }
-
     public View buildRecyclerView(View view) {
-        checkoutRecyclerView = view.findViewById(R.id.checkout_recyclerView);
+        favouritesRecyclerView = view.findViewById(R.id.checkout_recyclerView);
         //if we want to set the size: checkoutRecyclerView.setHasFixedSize(true);
-        checkoutLayoutManager = new LinearLayoutManager(view.getContext());
-        favouritesAdapter = new FavouritesAdapter(view.getContext(), checkoutList);
+        favouritesLayoutManager = new LinearLayoutManager(view.getContext());
+        favouritesAdapter = new FavouritesAdapter(view.getContext(), favouritesList);
 
-        checkoutRecyclerView.setLayoutManager(checkoutLayoutManager);
-        checkoutRecyclerView.setAdapter(favouritesAdapter);
-
-        checkoutTotal = view.findViewById(R.id.checkout_total);
-
-        total = orderTotal(checkoutList);
-        checkoutTotal.setText(this.getActivity().getString(R.string.total, NumberFormat.getCurrencyInstance(new Locale("en", "US")).format(total)));
+        favouritesRecyclerView.setLayoutManager(favouritesLayoutManager);
+        favouritesRecyclerView.setAdapter(favouritesAdapter);
 
         favouritesAdapter.setOnItemClickListener(new FavouritesAdapter.OnItemClickListener(){
             @Override

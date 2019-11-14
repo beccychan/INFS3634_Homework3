@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
@@ -95,7 +95,7 @@ public class HomeFragment extends Fragment implements MenuAdapter.OnItemClickLis
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         menuRecyclerView = view.findViewById(R.id.menu_recyclerView);
         menuRecyclerView.setHasFixedSize(true);
-        menuRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+        menuRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity());
 
         Context context;
         RequestQueue queue = Volley.newRequestQueue(this.getActivity());

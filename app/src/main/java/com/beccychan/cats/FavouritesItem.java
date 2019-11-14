@@ -1,6 +1,6 @@
 package com.beccychan.cats;
 
-public class CheckoutItem {
+public class FavouritesItem {
     private Integer itemAmount;
     private Integer itemId;
     private String itemImage;
@@ -9,7 +9,7 @@ public class CheckoutItem {
     private String itemDescription;
 
 
-    public CheckoutItem(Integer amount, Integer id, String image, String name, Double price, String description) {
+    public FavouritesItem(Integer amount, Integer id, String image, String name, Double price, String description) {
         itemAmount = amount;
         itemId = id;
         itemImage = image;

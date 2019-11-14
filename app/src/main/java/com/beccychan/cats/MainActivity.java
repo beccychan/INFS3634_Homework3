@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
                             selectedFragment = new HomeFragment();
                             break;
                         case R.id.nav_checkout:
-                            selectedFragment = new CheckoutFragment();
+                            selectedFragment = new FavouritesFragment();
                             break;
                     }
 
