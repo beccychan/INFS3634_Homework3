@@ -62,24 +62,7 @@ public class DetailActivity extends AppCompatActivity {
         menuPriceView.setText(NumberFormat.getCurrencyInstance(new Locale("en", "US")).format(Double.valueOf(menuPrice)));
         menuDescriptionView.setText(menuDescription);
 
-        orderAmount = findViewById(R.id.order_amount);
-        Button orderIncrease = findViewById(R.id.order_increase);
-        Button orderDecrease = findViewById(R.id.order_decrease);
         Button orderAdd = findViewById(R.id.order_add);
-
-        orderIncrease.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                increase();
-            }
-        });
-
-        orderDecrease.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                decrease();
-            }
-        });
 
         orderAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,19 +78,6 @@ public class DetailActivity extends AppCompatActivity {
         }
     }
 
-    private void increase() {
-        if (orderAmountCount < 10) {
-            orderAmountCount++;
-            orderAmount.setText(String.valueOf(orderAmountCount));
-        }
-    }
-
-    private void decrease() {
-        if (orderAmountCount > 1) {
-            orderAmountCount--;
-            orderAmount.setText(String.valueOf(orderAmountCount));
-        }
-    }
 
     private void add() {
         ArrayList<FavouritesItem> orderList;
@@ -128,10 +98,10 @@ public class DetailActivity extends AppCompatActivity {
 
         SharedPreferences.Editor editor = sharedPreferences.edit();
         json = gson.toJson(orderList);
-        editor.putString("orders", json);
+        editor.putString("favourites", json);
         editor.apply();
 
-        Toast.makeText(getApplicationContext(),"Your order has been added.", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(),"Added to Favourites.", Toast.LENGTH_SHORT).show();
     }
 
 //  Persists number of items ordered on screen rotation.

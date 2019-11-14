@@ -63,7 +63,7 @@ public class HomeFragment extends Fragment implements MenuAdapter.OnItemClickLis
 
                     if (catImageObj.length != 0) {
                         catImageUrl = catImageObj[0].getUrl();
-                        Breeds[] catBreeds = catImageObj[0].getBreeds();
+                        CatBreed[] catBreeds = catImageObj[0].getBreeds();
                         tempCat = catBreeds[0];
                         actionsAfterImageQuerySuccess();
                     } else {

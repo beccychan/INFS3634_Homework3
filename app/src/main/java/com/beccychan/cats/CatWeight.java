@@ -1,6 +1,6 @@
 package com.beccychan.cats;
 
-public class Weight
+public class CatWeight
 {
     private String metric;
 
