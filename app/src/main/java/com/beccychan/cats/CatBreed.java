@@ -5,6 +5,7 @@ import java.io.Serializable;
 public class CatBreed implements Serializable {
     private String id;
     private String name;
+    private String searchText;
     private String description;
     private CatWeight weight;
     private String temperament;
@@ -19,6 +20,14 @@ public class CatBreed implements Serializable {
 
     public String getName() {
         return name;
+    }
+
+    public String getSearchText(){
+        return searchText;
+    }
+
+    public CatBreed(String searchText){
+        this.searchText = searchText;
     }
 
     public String getDescription() {
