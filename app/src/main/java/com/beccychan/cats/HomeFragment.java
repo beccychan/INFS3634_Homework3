@@ -38,15 +38,11 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class HomeFragment extends Fragment implements CatAdapter.OnItemClickListener {
     public static final String CAT_ID = "catId";
-    public static final String MENU_IMAGE = "menuImage";
-    public static final String MENU_NAME = "menuName";
-    public static final String MENU_PRICE = "menuPrice";
-    public static final String MENU_DESCRIPTION = "menuDescription";
     public static String catBreedURL = "catBreedURL";
 
-    private RecyclerView menuRecyclerView;
+    private RecyclerView catRecyclerView;
     private CatAdapter catAdapter;
-    private ArrayList<CatBreed> menuList;
+    private ArrayList<CatBreed> catList;
 
     /*
     String searchUrl = "https://api.thecatapi.com/v1/images/search?breed_id=" + catID;
@@ -93,9 +89,9 @@ public class HomeFragment extends Fragment implements CatAdapter.OnItemClickList
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-        menuRecyclerView = view.findViewById(R.id.cat_recyclerView);
-        menuRecyclerView.setHasFixedSize(true);
-        menuRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity());
+        catRecyclerView = view.findViewById(R.id.cat_recyclerView);
+        catRecyclerView.setHasFixedSize(true);
+        catRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         Context context;
         RequestQueue queue = Volley.newRequestQueue(this.getActivity());
@@ -163,15 +159,15 @@ public class HomeFragment extends Fragment implements CatAdapter.OnItemClickList
         editor.putString("menu", json);
         editor.apply();
 
-        Type menuJson = new TypeToken<ArrayList<MenuItem>>(){}.getType();
-        menuList = gson.fromJson(json, menuJson);
+        Type menuJson = new TypeToken<ArrayList<CatBreed>>(){}.getType();
+        catList = gson.fromJson(json, menuJson);
 
         /*Type collectionType = new TypeToken<List<Cat>>(){}.getType();
         catList = (List<Cat>) new Gson()
                 .fromJson( apiText , collectionType);*/
 
-        catAdapter = new CatAdapter(getActivity(), menuList);
-        menuRecyclerView.setAdapter(catAdapter);
+        catAdapter = new CatAdapter(getActivity(), catList);
+        catRecyclerView.setAdapter(catAdapter);
         catAdapter.setOnItemClickListener(HomeFragment.this);
     }
 
@@ -193,7 +189,7 @@ public class HomeFragment extends Fragment implements CatAdapter.OnItemClickList
     @Override
     public void onItemClick(int position) {
         Intent detailIntent = new Intent(getActivity(), DetailActivity.class);
-        CatBreed clickedItem = menuList.get(position);
+        CatBreed clickedItem = catList.get(position);
 
         detailIntent.putExtra(CAT_ID, String.valueOf(clickedItem.getId()));
 //        detailIntent.putExtra(MENU_IMAGE, clickedItem.getMenuImage());

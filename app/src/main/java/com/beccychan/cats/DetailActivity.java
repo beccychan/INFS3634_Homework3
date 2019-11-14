@@ -21,17 +21,13 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import static com.beccychan.cats.HomeFragment.MENU_DESCRIPTION;
-import static com.beccychan.cats.HomeFragment.MENU_ID;
-import static com.beccychan.cats.HomeFragment.MENU_IMAGE;
-import static com.beccychan.cats.HomeFragment.MENU_NAME;
-import static com.beccychan.cats.HomeFragment.MENU_PRICE;
+import static com.beccychan.cats.HomeFragment.CAT_ID;
 
 public class DetailActivity extends AppCompatActivity {
     private TextView orderAmount;
     private int orderAmountCount = 1;
 
-    private String menuId;
+    private String catId;
     private String menuImage;
     private String menuName;
     private String menuPrice;
@@ -46,11 +42,7 @@ public class DetailActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        menuId = intent.getStringExtra(MENU_ID);
-        menuImage = intent.getStringExtra(MENU_IMAGE);
-        menuName = intent.getStringExtra(MENU_NAME);
-        menuPrice = intent.getStringExtra(MENU_PRICE);
-        menuDescription = intent.getStringExtra(MENU_DESCRIPTION);
+        catId = intent.getStringExtra(CAT_ID);
 
         ImageView menuImageView = findViewById(R.id.menu_image_detail);
         TextView menuNameView = findViewById(R.id.menu_name_detail);
