@@ -5,8 +5,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -34,17 +37,16 @@ import java.util.Map;
 import static android.content.Context.MODE_PRIVATE;
 
 public class HomeFragment extends Fragment implements CatAdapter.OnItemClickListener {
-    public static final String MENU_ID = "menuId";
+    public static final String CAT_ID = "catId";
     public static final String MENU_IMAGE = "menuImage";
     public static final String MENU_NAME = "menuName";
     public static final String MENU_PRICE = "menuPrice";
     public static final String MENU_DESCRIPTION = "menuDescription";
-    public static final String catID = "catID";
     public static String catBreedURL = "catBreedURL";
 
     private RecyclerView menuRecyclerView;
     private CatAdapter catAdapter;
-    private ArrayList<MenuItem> menuList;
+    private ArrayList<CatBreed> menuList;
 
     /*
     String searchUrl = "https://api.thecatapi.com/v1/images/search?breed_id=" + catID;
@@ -127,6 +129,31 @@ public class HomeFragment extends Fragment implements CatAdapter.OnItemClickList
         return view;
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
+
+        inflater.inflate(R.menu.cat_search_menu, menu);
+
+        android.view.MenuItem searchItem = menu.findItem(R.id.action_search);
+
+        SearchView searchView = (SearchView) searchItem.getActionView();
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                catAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
     private void loadMenu() {
         SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("shared preferences", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -166,13 +193,13 @@ public class HomeFragment extends Fragment implements CatAdapter.OnItemClickList
     @Override
     public void onItemClick(int position) {
         Intent detailIntent = new Intent(getActivity(), DetailActivity.class);
-        MenuItem clickedItem = menuList.get(position);
+        CatBreed clickedItem = menuList.get(position);
 
-        detailIntent.putExtra(MENU_ID, String.valueOf(clickedItem.getMenuId()));
-        detailIntent.putExtra(MENU_IMAGE, clickedItem.getMenuImage());
-        detailIntent.putExtra(MENU_NAME, clickedItem.getMenuName());
-        detailIntent.putExtra(MENU_PRICE, String.valueOf(clickedItem.getMenuPrice()));
-        detailIntent.putExtra(MENU_DESCRIPTION, clickedItem.getMenuDescription());
+        detailIntent.putExtra(CAT_ID, String.valueOf(clickedItem.getId()));
+//        detailIntent.putExtra(MENU_IMAGE, clickedItem.getMenuImage());
+//        detailIntent.putExtra(MENU_NAME, clickedItem.getMenuName());
+//        detailIntent.putExtra(MENU_PRICE, String.valueOf(clickedItem.getMenuPrice()));
+//        detailIntent.putExtra(MENU_DESCRIPTION, clickedItem.getMenuDescription());
 
         startActivity(detailIntent);
     }
