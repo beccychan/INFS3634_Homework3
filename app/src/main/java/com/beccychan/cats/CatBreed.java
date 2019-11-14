@@ -11,7 +11,6 @@ public class CatBreed {
     private String wikipedia_url;
     private String dog_friendly;
 
-
     public String getId() {
         return id;
     }

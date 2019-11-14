@@ -27,7 +27,7 @@ public class FavouritesFragment extends Fragment {
     private RecyclerView favouritesRecyclerView;
     private FavouritesAdapter favouritesAdapter;
     private RecyclerView.LayoutManager favouritesLayoutManager;
-    private ArrayList<FavouritesItem> favouritesList;
+    private ArrayList<CatBreed> favouritesList;
 
     @Nullable
     @Override
@@ -46,11 +46,11 @@ public class FavouritesFragment extends Fragment {
         delete("favourites", favouritesList);
     }
 
-    private ArrayList<FavouritesItem> load(String key, ArrayList<FavouritesItem> list) {
+    private ArrayList<CatBreed> load(String key, ArrayList<CatBreed> list) {
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("shared preferences", MODE_PRIVATE);
         Gson gson = new Gson();
         String json = sharedPreferences.getString(key, null);
-        Type menuJson = new TypeToken<ArrayList<FavouritesItem>>(){}.getType();
+        Type menuJson = new TypeToken<ArrayList<CatBreed>>(){}.getType();
         list = gson.fromJson(json, menuJson);
 
         if (list == null) {
@@ -60,7 +60,7 @@ public class FavouritesFragment extends Fragment {
         return list;
     }
 
-    private void delete(String key, ArrayList<FavouritesItem> list) {
+    private void delete(String key, ArrayList<CatBreed> list) {
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("shared preferences", MODE_PRIVATE);
         Gson gson = new Gson();
         SharedPreferences.Editor editor = sharedPreferences.edit();

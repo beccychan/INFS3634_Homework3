@@ -80,7 +80,7 @@ public class DetailActivity extends AppCompatActivity {
 
 
     private void add() {
-        ArrayList<FavouritesItem> orderList;
+        ArrayList<FavouritesItem> favouritesList;
         FavouritesItem order = new FavouritesItem(orderAmountCount, Integer.valueOf(menuId), menuImage, menuName, Double.valueOf(menuPrice), menuDescription);
 
         SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);

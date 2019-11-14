@@ -11,15 +11,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.squareup.picasso.Picasso;
-
-import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.FavouritesViewHolder>{
-    private ArrayList<FavouritesItem> favouritesList;
-    private Context checkoutContext;
+    private ArrayList<CatBreed> favouritesList;
+    private Context favouritesContext;
     private OnItemClickListener favouritesListener;
 
     public interface OnItemClickListener{
@@ -30,9 +26,9 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Fa
         favouritesListener = listener;
     }
 
-    public FavouritesAdapter(Context context, ArrayList<FavouritesItem> list) {
+    public FavouritesAdapter(Context context, ArrayList<CatBreed> list) {
         favouritesList = list;
-        checkoutContext = context;
+        favouritesContext = context;
     }
 
     @NonNull
@@ -47,43 +43,25 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Fa
         return favouritesList.size();
     }
 
-
-    //Make decision on what to put into the favourites screen.
     @Override
     public void onBindViewHolder(@NonNull FavouritesViewHolder holder, int position) {
-        FavouritesItem favouritesItem = favouritesList.get(position);
-        String favouriteImage = checkoutItem.getItemImage();
-        String favouriteName = checkoutItem.getItemName();
-        Double favouritePrice = checkoutItem.getItemPrice();
-        Integer favouriteQuantity = checkoutItem.getItemAmount();
+        CatBreed favouritesItem = favouritesList.get(position);
+        String favouriteName = favouritesItem.getName();
 
-        //breed
-        //weight (metrics)
-        //
-
-        Picasso.get().load("file:///android_asset/" + checkoutImage).fit().centerInside().into(holder.checkoutImage);
-        holder.checkoutName.setText(checkoutName);
-        holder.checkoutPrice.setText(NumberFormat.getCurrencyInstance(new Locale("en", "US")).format(checkoutPrice * checkoutQuantity));
-        holder.checkoutQuantity.setText(checkoutContext.getString(R.string.quantity, checkoutQuantity));
+        holder.favouritesName.setText(favouriteName);
 
     }
 
     public class FavouritesViewHolder extends RecyclerView.ViewHolder {
-        public ImageView checkoutImage;
-        public TextView checkoutName;
-        public TextView checkoutPrice;
-        public TextView checkoutQuantity;
-        public Button deleteMenuItem;
+        public TextView favouritesName;
+        public Button deleteFavouritesItem;
 
         public FavouritesViewHolder(View itemView, final OnItemClickListener listener) {
             super(itemView);
-            checkoutImage = itemView.findViewById(R.id.checkout_image);
-            checkoutName = itemView.findViewById(R.id.checkout_name);
-            checkoutPrice = itemView.findViewById(R.id.checkout_price);
-            checkoutQuantity = itemView.findViewById(R.id.checkout_quantity);
-            deleteMenuItem = itemView.findViewById(R.id.checkout_delete);
+            favouritesName = itemView.findViewById(R.id.favourite_name);
+            deleteFavouritesItem = itemView.findViewById(R.id.favourite_delete);
 
-            deleteMenuItem.setOnClickListener(new View.OnClickListener(){
+            deleteFavouritesItem.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v){
                     if(listener != null){
