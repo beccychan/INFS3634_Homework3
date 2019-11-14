@@ -2,6 +2,8 @@ package com.beccychan.cats;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -33,6 +35,14 @@ public class DetailActivity extends AppCompatActivity {
     private String catDescription;
     private String catDescriptionTitle;
 
+    private RecyclerView statsRecyclerView;
+    private StatsAdapter statsAdapter;
+    private RecyclerView.LayoutManager statsLayoutManager;
+    private ArrayList<Stat> statsList;
+
+
+    //ADD GSON API CALL TO LOAD THE DATA
+    //CREATE BUNDLE TO SAVE THE DATA OF THE CAT THAT WAS SELECTED
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +68,16 @@ public class DetailActivity extends AppCompatActivity {
 
         ImageButton favButton = findViewById(R.id.favoriteButton_detail);
 
+        statsRecyclerView = findViewById(R.id.favourites_recyclerView);
+        //if we want to set the size: checkoutRecyclerView.setHasFixedSize(true);
+        statsLayoutManager = new LinearLayoutManager(this);
+
+        //PUSH THE STATS TO THE ARRAY BEFORE THIS
+        statsAdapter = new StatsAdapter(this, statsList);
+
+        statsRecyclerView.setLayoutManager(statsLayoutManager);
+        statsRecyclerView.setAdapter(statsAdapter);
+
         favButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,6 +90,18 @@ public class DetailActivity extends AppCompatActivity {
             orderAmountCount = savedInstanceState.getInt("count");
             orderAmount.setText(String.valueOf(orderAmountCount));
         }*/
+    }
+
+    public ArrayList<Stat> addStats(CatBreed cat) {
+        ArrayList<Stat> catStats = new ArrayList<>();
+
+        catStats.add(new Stat("Origin", cat.getOrigin());
+        catStats.add(new Stat("Life Span", cat.getLife_span());
+        catStats.add(new Stat("Weight", cat.getWeight().getMetric());
+        catStats.add(new Stat("Dog Friendly", cat.getDog_friendly());
+        catStats.add(new Stat("Wikipedia URL", cat.getWikipedia_url());
+
+        return catStats;
     }
 
 

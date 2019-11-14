@@ -12,27 +12,22 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-//icon_stats, value_stats, key_stats
-
 public class StatsAdapter extends RecyclerView.Adapter<StatsAdapter.StatsViewHolder> {
-    private ArrayList<CatBreed> catList;
-
+    private ArrayList<Stat> catStat;
 
     public static class StatsViewHolder extends RecyclerView.ViewHolder {
-        public ImageView statsIcon;
         public TextView statsValue;
         public TextView statsKey;
 
         public StatsViewHolder(@NonNull View itemView) {
             super(itemView);
-            statsIcon = itemView.findViewById(R.id.icon_stats);
             statsValue = itemView.findViewById(R.id.value_stats);
-            statsKey = itemView.findViewById(R.id.key_stats)
+            statsKey = itemView.findViewById(R.id.key_stats);
         }
     }
 
-    public StatsAdapter(ArrayList<CatBreed> list) {
-        catList = list;
+    public StatsAdapter(ArrayList<Stat> stat) {
+        catStat = stat;
     }
 
     @NonNull
@@ -45,20 +40,14 @@ public class StatsAdapter extends RecyclerView.Adapter<StatsAdapter.StatsViewHol
 
     @Override
     public void onBindViewHolder(@NonNull StatsViewHolder holder, int position) {
-        CatBreed currentItem = catList.get(position);
-        HashMap<String, String> temporaryList = new HashMap<>();
-        temporaryList.put("Origin", currentItem.getOrigin());
-        temporaryList.put("Life Span", currentItem.getLife_span());
-        temporaryList.put("Weight", currentItem.getWeight().getMetric());
-        temporaryList.put("Dog Friendly", currentItem.getDog_friendly());
-        temporaryList.put("Wikipedia Link", currentItem.getWikipedia_url());
+        Stat currentItem = catStat.get(position);
 
-
-        holder.statsValue.setText(currentItem.get);
+        holder.statsValue.setText(currentItem.getValue());
+        holder.statsKey.setText(currentItem.getKey());
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return catStat.size();
     }
 }
