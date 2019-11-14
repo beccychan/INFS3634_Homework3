@@ -11,6 +11,8 @@ import android.view.MenuItem;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
+
+    //makes sure that the state of the application is maintained when the phone orientation is flipped
     @Override
     public void registerActivityLifecycleCallbacks(@NonNull Application.ActivityLifecycleCallbacks callback) {
         super.registerActivityLifecycleCallbacks(callback);
