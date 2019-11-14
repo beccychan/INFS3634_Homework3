@@ -1,69 +1,65 @@
 package com.beccychan.cats;
 
 public class FavouritesItem {
-    private Integer itemAmount;
-    private Integer itemId;
-    private String itemImage;
-    private String itemName;
-    private Double itemPrice;
-    private String itemDescription;
+    private Integer catId;
+    private String catImage;
+    private String catName;
+    private String temperament;
+    private String catDescriptionTitle;
+    private String catDescription;
 
 
-    public FavouritesItem(Integer amount, Integer id, String image, String name, Double price, String description) {
-        itemAmount = amount;
-        itemId = id;
-        itemImage = image;
-        itemName = name;
-        itemPrice = price;
-        itemDescription = description;
 
+    public FavouritesItem(Integer id, String image, String name, String temperament, String descriptionTitle, String description) {
+        id = catId;
+        image = catImage;
+        name = catName;
+        temperament = temperament;
+        descriptionTitle = catDescriptionTitle;
+        description = catDescription;
     }
 
-    public Integer getItemAmount() {
-        return itemAmount;
+    public Integer getCatId() {
+        return catId;
     }
 
-    public void setItemAmount(Integer itemAmount) {
-        this.itemAmount = itemAmount;
+    public void setCatId(Integer catId) {
+        this.catId = catId;
     }
 
-    public Integer getItemId() {
-        return itemId;
+    public String getCatImage() {
+        return catImage;
     }
 
-    public void setItemId(Integer itemId) {
-        this.itemId = itemId;
+    public void setCatImage(String catImage) {
+        this.catImage = catImage;
     }
 
-    public String getItemImage() {
-        return itemImage;
+    public String getCatName() {
+        return catName;
     }
 
-    public void setItemImage(String itemImage) {
-        this.itemImage = itemImage;
+    public void setCatName(String catName) {
+        this.catName = catName;
     }
 
-    public String getItemName() {
-        return itemName;
+    public void setTemperament (String temperament){
+        this.temperament = temperament;
     }
 
-    public void setItemName(String itemName) {
-        this.itemName = itemName;
+    public String getTemperament() {
+        return temperament;
     }
 
-    public Double getItemPrice() {
-        return itemPrice;
+    public String getCatDescription() {
+        return catDescription;
     }
 
-    public void setItemPrice(Double itemPrice) {
-        this.itemPrice = itemPrice;
+    public void setCatDescription(String catDescription) {
+        this.catDescription = catDescription;
     }
 
-    public String getItemDescription() {
-        return itemDescription;
-    }
-
-    public void setItemDescription(String itemDescription) {
-        this.itemDescription = itemDescription;
+    public void setCatDescriptionTitle(String catDescriptionTitle) {
+        this.catDescriptionTitle = catDescriptionTitle;
     }
 }

@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,14 +25,13 @@ import java.util.Locale;
 import static com.beccychan.cats.HomeFragment.CAT_ID;
 
 public class DetailActivity extends AppCompatActivity {
-    private TextView orderAmount;
-    private int orderAmountCount = 1;
 
     private String catId;
-    private String menuImage;
-    private String menuName;
-    private String menuPrice;
-    private String menuDescription;
+    private String catImage;
+    private String catName;
+    private String temperament;
+    private String catDescription;
+    private String catDescriptionTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,19 +44,21 @@ public class DetailActivity extends AppCompatActivity {
 
         catId = intent.getStringExtra(CAT_ID);
 
-        ImageView menuImageView = findViewById(R.id.menu_image_detail);
-        TextView menuNameView = findViewById(R.id.menu_name_detail);
-        TextView menuPriceView = findViewById(R.id.menu_price_detail);
-        TextView menuDescriptionView = findViewById(R.id.menu_description_detail);
+        ImageView catImageView = findViewById(R.id.image_detail);
+        TextView catNameView = findViewById(R.id.name_detail);
+        TextView temperamentView = findViewById(R.id.temperament_detail);
+        TextView catDescriptionTitleView = findViewById(R.id.descriptionTitle_detail);
+        TextView catDescriptionView = findViewById(R.id.description_detail);
 
-        Picasso.get().load("file:///android_asset/" + menuImage).fit().centerInside().into(menuImageView);
-        menuNameView.setText(menuName);
-        menuPriceView.setText(NumberFormat.getCurrencyInstance(new Locale("en", "US")).format(Double.valueOf(menuPrice)));
-        menuDescriptionView.setText(menuDescription);
+        Picasso.get().load("file:///android_asset/" + catImage).fit().centerInside().into(catImageView); //load from API instead
+        catNameView.setText(catName);
+        temperamentView.setText(temperament);
+        catDescriptionView.setText(catDescription);
+        catDescriptionTitleView.setText(catDescriptionTitle);
 
-        Button orderAdd = findViewById(R.id.order_add);
+        ImageButton favButton = findViewById(R.id.favoriteButton_detail);
 
-        orderAdd.setOnClickListener(new View.OnClickListener() {
+        favButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 add();
@@ -64,41 +66,41 @@ public class DetailActivity extends AppCompatActivity {
             }
         });
 
-        if (savedInstanceState != null) {
+        /*if (savedInstanceState != null) {
             orderAmountCount = savedInstanceState.getInt("count");
             orderAmount.setText(String.valueOf(orderAmountCount));
-        }
+        }*/
     }
 
 
     private void add() {
         ArrayList<FavouritesItem> favouritesList;
-        FavouritesItem order = new FavouritesItem(orderAmountCount, Integer.valueOf(menuId), menuImage, menuName, Double.valueOf(menuPrice), menuDescription);
+        FavouritesItem favourite = new FavouritesItem(Integer.valueOf(catId), catImage, catName, temperament, catDescriptionTitle, catDescription);
 
         SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
-        String json = sharedPreferences.getString("orders", null);
+        String json = sharedPreferences.getString("favourites", null);
         Gson gson = new Gson();
 
-        Type menuJson = new TypeToken<ArrayList<FavouritesItem>>(){}.getType();
-        orderList = gson.fromJson(json, menuJson);
+        Type favouritesJson = new TypeToken<ArrayList<FavouritesItem>>(){}.getType();
+        favouritesList = gson.fromJson(json, favouritesJson);
 
-        if (orderList == null) {
-            orderList = new ArrayList<>();
+        if (favouritesList == null) {
+            favouritesList = new ArrayList<>();
         }
 
-        orderList.add(order);
+        favourites.add(favourite);
 
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        json = gson.toJson(orderList);
+        json = gson.toJson(favouritesList);
         editor.putString("favourites", json);
         editor.apply();
 
         Toast.makeText(getApplicationContext(),"Added to Favourites.", Toast.LENGTH_SHORT).show();
     }
-
+/*
 //  Persists number of items ordered on screen rotation.
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt("count", orderAmountCount);
-    }
+    }*/
 }
