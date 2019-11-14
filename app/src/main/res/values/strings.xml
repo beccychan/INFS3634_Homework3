@@ -8,4 +8,6 @@
     <string name="country">United States</string>
     <string name="origin">Origin</string>
     <string name="stats">Stats</string>
+    <string name="search">Search</string>
+    <string name="search_hint">Hint</string>
 </resources>
