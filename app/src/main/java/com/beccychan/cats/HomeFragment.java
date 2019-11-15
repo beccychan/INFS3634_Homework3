@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
@@ -94,6 +95,8 @@ public class HomeFragment extends Fragment implements CatAdapter.OnItemClickList
         catRecyclerView.setHasFixedSize(true);
         catRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));//rather than getActivity
 
+        setHasOptionsMenu(true);
+
         if (storeResponse == null) {
             getCatBreeds();
         } else {
@@ -133,10 +136,17 @@ public class HomeFragment extends Fragment implements CatAdapter.OnItemClickList
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
-        //MenuInflater inflater = getMenuInflater();
+
+
+
+        menu.clear();
+//        MenuInflater inflater = this.getActivity().getMenuInflater();
         inflater.inflate(R.menu.cat_search_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+        //i think this links to previous inflater and overlooks inflating the search menu
         android.view.MenuItem searchItem = menu.findItem(R.id.action_search);
-        SearchView searchView = (SearchView) searchItem.getActionView();
+        searchItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW | MenuItem.SHOW_AS_ACTION_IF_ROOM);
+            SearchView searchView = (SearchView) searchItem.getActionView();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -150,8 +160,7 @@ public class HomeFragment extends Fragment implements CatAdapter.OnItemClickList
             }
         });
 
-        super.onCreateOptionsMenu(menu, inflater);
-        //i think this links to previous inflater and overlooks inflating the search menu
+
     }
 
     private void parseResponse(String response) {

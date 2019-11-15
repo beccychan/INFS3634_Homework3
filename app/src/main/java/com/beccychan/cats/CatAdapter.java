@@ -60,7 +60,10 @@ public class CatAdapter extends RecyclerView.Adapter<CatAdapter.CatViewHolder> i
 
     @Override
     public int getItemCount() {
-        return catList.size();
+        if (catList != null) {
+            return catList.size();
+        }
+        return 0;
     }
 
     public class CatViewHolder extends RecyclerView.ViewHolder {
@@ -124,7 +127,10 @@ public class CatAdapter extends RecyclerView.Adapter<CatAdapter.CatViewHolder> i
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
             catList.clear(); //remove any items so that we can put items from filteredList
-            catList.addAll((List) results.values);
+            System.out.println(results.values);
+            if (results.values != null) {
+                catList.addAll((List) results.values);
+            }
             notifyDataSetChanged(); //notify refresh
 
         }
