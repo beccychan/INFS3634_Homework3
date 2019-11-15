@@ -46,47 +46,6 @@ public class HomeFragment extends Fragment implements CatAdapter.OnItemClickList
 
     private String storeResponse;
 
-    /*
-    String searchUrl = "https://api.thecatapi.com/v1/images/search?breed_id=" + catID;
-
-    StringRequest stringRequest = new StringRequest(Request.Method.GET, searchUrl,
-            new Response.Listener<String>() {
-                @Override
-                public void onResponse(String response) {
-                    Gson gson = new Gson();
-                    String apiText = response.toString();
-                    System.out.println("Cat ID is:" + catID);
-                    System.out.println("Cat Response: " + apiText);
-                    CatImage[] catImageObj = gson.fromJson(apiText, CatImage[].class);
-
-                    if (catImageObj.length != 0) {
-                        catImageUrl = catImageObj[0].getUrl();
-                        CatBreed[] catBreeds = catImageObj[0].getBreeds();
-                        tempCat = catBreeds[0];
-                        actionsAfterImageQuerySuccess();
-                    } else {
-                        System.out.println("API TEXT RETURNED NOTHING");
-                        actionsAfterImageQueryFailure();
-                    }
-
-                }
-            }, new Response.ErrorListener() {
-        @Override
-        public void onErrorResponse(VolleyError error) {
-            Log.d("NO BUENO", error.toString());
-            Log.d("PARSE FINISHED", "WITH ERROR");
-            //com.android.volley.NoConnectionError: java.net.UnknownHostException: Unable to resolve host "api.nytimes.com": No address associated with hostname
-        }
-    }
-    ) {
-        @Override
-        public Map<String, String> getHeaders() throws AuthFailureError {
-            Map<String, String> headers = new HashMap<String, String>();
-            //headers.put("x-api-key", "e11cbe67-4e8f-4f95-85e6-c634fc9582b5");
-            return headers;
-        }
-    }; */
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -97,10 +56,10 @@ public class HomeFragment extends Fragment implements CatAdapter.OnItemClickList
 
         setHasOptionsMenu(true);
 
-        if (storeResponse == null) {
+        if (catList == null) {
             getCatBreeds();
         } else {
-            parseResponse(storeResponse);
+            parseResponse();
         }
 
         return view;
@@ -113,8 +72,10 @@ public class HomeFragment extends Fragment implements CatAdapter.OnItemClickList
         StringRequest stringRequest = new StringRequest(Request.Method.GET, catBreedURL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                storeResponse = response;
-                parseResponse(response);
+                Gson gson = new Gson();
+                Type menuJson = new TypeToken<ArrayList<CatBreed>>(){}.getType();
+                catList = gson.fromJson(response, menuJson);
+                parseResponse();
             }
         }, new Response.ErrorListener() {
             @Override
@@ -163,11 +124,7 @@ public class HomeFragment extends Fragment implements CatAdapter.OnItemClickList
 
     }
 
-    private void parseResponse(String response) {
-
-        Gson gson = new Gson();
-        Type menuJson = new TypeToken<ArrayList<CatBreed>>(){}.getType();
-        catList = gson.fromJson(response, menuJson);
+    private void parseResponse() {
         catAdapter = new CatAdapter(getActivity(), catList);
         catRecyclerView.setAdapter(catAdapter);
         catAdapter.setOnItemClickListener(HomeFragment.this);
