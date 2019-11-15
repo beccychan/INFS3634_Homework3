@@ -93,7 +93,7 @@ public class HomeFragment extends Fragment implements CatAdapter.OnItemClickList
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         catRecyclerView = view.findViewById(R.id.cat_recyclerView);
         catRecyclerView.setHasFixedSize(true);
-        catRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        catRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         setHasOptionsMenu(true);
 
