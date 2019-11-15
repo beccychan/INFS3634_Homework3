@@ -112,7 +112,7 @@ public class CatAdapter extends RecyclerView.Adapter<CatAdapter.CatViewHolder> i
                 //iterate through all our items to see which item matches search
                 //(getText1 is the first line)
                 for(CatBreed cat : catListFull){
-                    if (cat.getSearchText().toLowerCase().contains(filterPattern)){ //or can use startsWith(filterPattern)
+                    if (cat.getName().toLowerCase().contains(filterPattern)){ //or can use startsWith(filterPattern)
                         filteredList.add(cat);
                     }
                 }
